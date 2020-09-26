@@ -1,96 +1,133 @@
-import random as r
-ai,player='O','X'
 board=[['_','_','_'],['_','_','_'],['_','_','_']]
-weights=[[3,2,3],[2,4,2],[3,2,3]]
-def init():
-    global ai,player,board,weights
-    ai,player='O','X'
-    board=[['_','_','_'],['_','_','_'],['_','_','_']]
-    weights=[[3,2,3],[2,4,2],[3,2,3]]    
-def move(row,col,ch):
-    if board[row][col]=='_':
-        board[row][col],weights[row][col]=ch,0
-        return True
-    else : return False
+count=0
+man,comp=0,0
+def display_board():
+    for i in range(0,3):
+        for j in range(0,3):
+            print(board[i][j],end='   ')
+        print("\n")
+    print("\n")
 
-def display(move_type='board'):
-    if move_type=='cpu' : print('*'*5+'CPU MOVE'+'*'*5)
-    elif move_type=='board': print("*"*5+'  Board of Tic Tac Toe '+'*'*5)    
-    else :print('*'*5+'PLAYER MOVE'+'*'*5)
-    for i in range(3):
-        for j in range(3):
-             print(board[i][j],end='\t')
-        print('\n')
-    print('\n')    
+def chk_won_zone(per):
+    for i in range(0,3):
+        if(board[i][0]==per and board[i][1]==per and board[i][2]==per):
+            return 1;
+    for j in range(0,3):
+        if(board[0][j]==per and board[1][j]==per and board[2][j]==per):
+            return 1;
+    if(board[0][0]==per and board[1][1]==per and board[2][2]==per):
+            return 1;
+    if(board[0][2]==per and board[1][1]==per and board[2][0]==per):
+            return 1;
+    return 0;
+def chk_win_zone(per):
+    for i in range(0,3):
+        if(board[i][0]==per and board[i][1]==per and board[i][2]=='_'):
+            return 1,i,2;
+        if(board[i][0]==per and board[i][1]=='_' and board[i][2]==per):
+            return 1,i,1;
+        if(board[i][0]=='_' and board[i][1]==per and board[i][2]==per):
+            return 1,i,0;
+    for j in range(0,3):
+        if(board[0][j]==per and board[1][j]==per and board[2][j]=='_'):
+            return 1,2,j;
+        if(board[0][j]==per and board[1][j]=='_' and board[2][j]==per):
+            return 1,1,j;
+        if(board[0][j]=='_' and board[1][j]==per and board[2][j]==per):
+            return 1,0,j;
+    #diagonal 1
+    if(board[0][0]=='_' and board[1][1]==per and board[2][2]==per):
+            return 1,0,0;
+    if(board[0][0]==per and board[1][1]=='_' and board[2][2]==per):
+            return 1,1,1;
+    if(board[0][0]==per and board[1][1]==per and board[2][2]=='_'):
+            return 1,2,2;
+    #diagonal 2
+    if(board[0][2]=='_' and board[1][1]==per and board[2][0]==per):
+            return 1,0,2;
+    if(board[0][2]==per and board[1][1]=='_' and board[2][0]==per):
+            return 1,1,1;
+    if(board[0][2]==per and board[1][1]==per and board[2][0]=='_'):
+            return 1,2,0;
+    return 0,-1,-1
     
-def compare_line(s1,ch):
-    return '_' in s1 and s1.count(ch)==2    
-     
-def get_position():
-    max_value=max([max(x) for x in weights])
-    positions=[(i,weights[i].index(max_value)) for i in range(3)  if max_value in weights[i]]
-    return positions
-
-def has_tied():
-    for row in board:
-       if '_' in row: return False
-    return True
-
-def attacking_positiion(ch):
-        default='_'
-        for i in range(3):
-            col=[board[0][i],board[1][i],board[2][i]]
-            if compare_line(board[i],ch): return (i,board[i].index(default))
-            elif compare_line(col,ch): return (col.index(default),i)  
-        diag1,diag2=[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][1],board[2][0]] 
-        if compare_line(diag1,ch):return (diag1.index(default),diag1.index(default))
-        elif compare_line(diag2,ch): return (diag2.index(default),2-diag2.index(default))
-        return False      
-
-def ai_move():
-    global ai,player
-    pos,f=attacking_positiion(ch=ai),False
-    if pos!=False:(row,col),f=pos,True
-    else :
-        pos=attacking_positiion(ch=player)
-        if pos!=False: row,col=pos
-        else: row,col=r.choice(get_position())
-    move(row,col,ai)
-    return f            
-
-def run():
-    global ai,player
-    end,tied,move_type=False,False,None         
-    print('*'*10+ 'Tic Tac Toe'+'*'*10+'\n')
-    display()
-    ch=input('Choose a Character X or O : ')
-    if ch=='O': ai,player=player,ai
-    while(True):
-        if tied:
-            print('*'*10+'The match is tied'+'*'*10)
+    
+def comp_turn():
+ global count
+ if(count<9):
+    count+=1
+    res=-1
+    res,row,col=chk_win_zone(comp)
+    if(res==1):
+        board[row][col]=comp
+        if(chk_won_zone(comp)==1):
+            display_board()
+            print("Oho! You lost...")
+            return
+    elif(res==0):
+        res1,row,col=chk_win_zone(man)
+        if(res1==1):
+            board[row][col]=comp
+            display_board()
+            
+        else:
+            for i in range(0,3):
+                for j in range(0,3):
+                    if(board[i][j]=='_'):
+                        break
+                if(board[i][j]=='_'):
+                    board[i][j]=comp
+                    break
+            display_board()
+            
+    if(count==9):
+            print("And it's a draw!,NO WIN NO LOSS")
             return 
-        elif end:
-            print('*'*10+move_type+' has own '+'*'*10) 
-            return       
-        move_type='player'
-        r=int(input("\nEnter next move's row (1 to 3): "))
-        c=int(input("Enter next move's column (1 to 3): "))
-        if not move(r-1,c-1,player):
-            print('\nEnter proper positions!!')
-        else:   
-          display(move_type=move_type)
-          tied=has_tied()          
-          if tied: continue
-          move_type='cpu'     
-          end=ai_move()                      
-          display(move_type=move_type)
-          tied=has_tied()            
-def main():    
-    run()
-    f='Y'
-    while(f=='Y'or f=='y'):
-        f=input('Do you want to play again Y or N: ')
-        init()
-        if f=='Y' or f=='y':run()
-    print('\n\n'+'*'*10+' Thank You '+'*'*10)    
+    else:
+        man_turn()
+        
+        
+    
+def man_turn():
+ global count
+ if(count<9):
+    count+=1
+    row=int(input("Enter the row (1 to 3) : "))
+    col=int(input("Enter the col (1 to 3) : "))
+    if(board[row-1][col-1]!='_'):
+        print("Please enter the position that is not occupied!")
+        count-=1
+        man_turn()
+    else:
+        board[row-1][col-1]=man
+        display_board()
+        if(chk_won_zone(man)==1):
+            print("Congo! You Won....PARTY?")
+            return
+        else:
+            if(count==9):
+                print("And it's a draw!,NO WIN NO LOSS")
+                return
+            else:
+                comp_turn()
+        
+def main():
+    global comp
+    global man
+    display_board()
+    p=int(input('Enter 1 to play as first player or 2 to play second player : '))
+    if(p==1):
+        man=1
+        comp=2
+        man_turn()
+    else:
+        comp=1
+        man=2
+        comp_turn()
+
+    
+    
+    
+    
+    
 main()
