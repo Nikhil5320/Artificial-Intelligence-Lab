@@ -245,13 +245,13 @@ def puzzle():
         
 
 def main():
-    print("Enter the elements of the 3*3 START matrix (ensure that you enter '_' for the empty box)")
+    print("Enter the elements of the 3*3 START matrix (one row in a LINE, SPACE between the elements. Also ensure that you enter '_' for the empty box)")
     for o in range(3):
         row=input().split()
         #for p in range(3):
             #row.append(input())
         matrix.append(row)
-    print("Enter the elements of the 3*3 GOAL matrix (ensure that you enter '_' for the empty box)")
+    print("Enter the elements of the 3*3 GOAL matrix (one row in a LINE, SPACE between the elements. Also ensure that you enter '_' for the empty box)")
     for o in range(3):
         row=input().split()
         #for p in range(3):
