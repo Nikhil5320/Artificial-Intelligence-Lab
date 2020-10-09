@@ -1,0 +1,267 @@
+from copy import copy, deepcopy
+matrix = []
+goal = []
+limit=1
+
+def find_h(m):
+    h=0
+    for o in range(3):
+        for p in range(3):
+            if (m[o][p]!=goal[o][p]):
+                h+=1
+    return h
+
+def print_matrix():
+    global limit
+    print("\n")
+    print("Stage ",limit,":")
+    for o in range(3):
+        for p in range(3):
+            print(matrix[o][p],end="   ")
+        print("\n")
+    print("----------##---------") 
+    limit+=1
+    
+def puzzle():
+                q=0
+                global matrix
+                for i in range(0,3):
+                 for j in range(0,3):
+                   if (matrix[i][j] == "_"):
+                     x=i
+                     y=j 
+                     q=1
+                     break
+                 if(q==1):
+                  break
+                if(x==0 and y==0):
+                    mat1=deepcopy(matrix)
+                    mat1[0][0],mat1[0][1]=mat1[0][1],mat1[0][0]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[0][0],mat2[1][0]=mat2[1][0],mat2[0][0]
+                    h2=find_h(mat2)
+                    if(h1<h2):
+                        matrix=deepcopy(mat1)
+                        h=h1
+                    else:
+                        matrix=deepcopy(mat2)
+                        h=h2
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==2 and y==0):
+                    mat1=deepcopy(matrix)
+                    mat1[2][0],mat1[2][1]=mat1[2][1],mat1[2][0]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[2][0],mat2[1][0]=mat2[1][0],mat2[2][0]
+                    h2=find_h(mat2)
+                    if(h1<h2):
+                        matrix=deepcopy(mat1)
+                        h=h1
+                    else:
+                        matrix=deepcopy(mat2)
+                        h=h2
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==0 and y==2):
+                    mat1=deepcopy(matrix)
+                    mat1[0][2],mat1[0][1]=mat1[0][1],mat1[0][2]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[0][2],mat2[1][2]=mat2[1][2],mat2[0][2]
+                    h2=find_h(mat2)
+                    if(h1<h2):
+                        matrix=deepcopy(mat1)
+                        h=h1
+                    else:
+                        matrix=deepcopy(mat2)
+                        h=h2
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==2 and y==2):
+                    mat1=deepcopy(matrix)
+                    mat1[2][2],mat1[2][1]=mat1[2][1],mat1[2][2]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[2][2],mat2[1][2]=mat2[1][2],mat2[2][2]
+                    h2=find_h(mat2)
+                    if(h1<h2):
+                        matrix=deepcopy(mat1)
+                        h=h1
+                    else:
+                        matrix=deepcopy(mat2)
+                        h=h2
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==0 and y==1):
+                    mat1=deepcopy(matrix)
+                    mat1[0][1],mat1[0][0]=mat1[0][0],mat1[0][1]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[0][1],mat2[0][2]=mat2[0][2],mat2[0][1]
+                    h2=find_h(mat2)
+                    mat3=deepcopy(matrix)
+                    mat3[0][1],mat3[1][1]=mat3[1][1],mat3[0][1]
+                    h3=find_h(mat3)
+                    if(h1<h2):
+                        h=h1
+                        matrix=deepcopy(mat1)
+                    else:
+                        h=h2
+                        matrix=deepcopy(mat2)
+                    if(h3<h):
+                        h=h3
+                        matrix=deepcopy(mat3)
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==1 and y==0):
+                    mat1=deepcopy(matrix)
+                    mat1[1][0],mat1[0][0]=mat1[0][0],mat1[1][0]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[1][0],mat2[1][1]=mat2[1][1],mat2[1][0]
+                    h2=find_h(mat2)
+                    mat3=deepcopy(matrix)
+                    mat3[1][0],mat3[2][0]=mat3[2][0],mat3[1][0]
+                    h3=find_h(mat3)
+                    if(h1<h2):
+                        h=h1
+                        matrix=deepcopy(mat1)
+                    else:
+                        h=h2
+                        matrix=deepcopy(mat2)
+                    if(h3<h):
+                        h=h3
+                        matrix=deepcopy(mat3)
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==1 and y==2):
+                    mat1=deepcopy(matrix)
+                    mat1[1][2],mat1[0][1]=mat1[0][1],mat1[1][2]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[1][2],mat2[1][1]=mat2[1][1],mat2[1][2]
+                    h2=find_h(mat2)
+                    mat3=deepcopy(matrix)
+                    mat3[1][2],mat3[2][2]=mat3[2][2],mat3[1][2]
+                    h3=find_h(mat3)
+                    if(h1<h2):
+                        h=h1
+                        matrix=deepcopy(mat1)
+                    else:
+                        h=h2
+                        matrix=deepcopy(mat2)
+                    if(h3<h):
+                        h=h3
+                        matrix=deepcopy(mat3)
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==2 and y==1):
+                    mat1=deepcopy(matrix)
+                    mat1[2][1],mat1[2][0]=mat1[2][0],mat1[2][1]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[2][1],mat2[2][2]=mat2[2][2],mat2[2][1]
+                    h2=find_h(mat2)
+                    mat3=deepcopy(matrix)
+                    mat3[2][1],mat3[1][1]=mat3[1][1],mat3[2][1]
+                    h3=find_h(mat3)
+                    if(h1<h2):
+                        h=h1
+                        matrix=deepcopy(mat1)
+                    else:
+                        h=h2
+                        matrix=deepcopy(mat2)
+                    if(h3<h):
+                        h=h3
+                        matrix=deepcopy(mat3)
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()
+                if(x==1 and y==1):
+                    mat1=deepcopy(matrix)
+                    mat1[1][1],mat1[0][1]=mat1[0][1],mat1[1][1]
+                    h1=find_h(mat1)
+                    mat2=deepcopy(matrix)
+                    mat2[1][1],mat2[1][2]=mat2[1][2],mat2[1][1]
+                    h2=find_h(mat2)
+                    mat3=deepcopy(matrix)
+                    mat3[1][1],mat3[2][1]=mat3[2][1],mat3[1][1]
+                    h3=find_h(mat3)
+                    mat4=deepcopy(matrix)
+                    mat4[1][1],mat4[0][1]=mat4[0][1],mat4[1][1]
+                    h4=find_h(mat4)
+                    if(h1<h2):
+                        h=h1
+                        matrix=deepcopy(mat1)
+                    else:
+                        h=h2
+                        matrix=deepcopy(mat2)
+                    if(h3<h):
+                        h=h3
+                        matrix=deepcopy(mat3)
+                    if(h4<h):
+                        h=h4
+                        matrix=deepcopy(mat4)
+                    if(h==0 or limit>12):
+                        print_matrix()
+                        return
+                    else:
+                        print_matrix()
+                        puzzle()    
+            
+        
+
+def main():
+    print("Enter the elements of the 3*3 START matrix (ensure that you enter '_' for the empty box)")
+    for o in range(3):
+        row=input().split()
+        #for p in range(3):
+            #row.append(input())
+        matrix.append(row)
+    print("Enter the elements of the 3*3 GOAL matrix (ensure that you enter '_' for the empty box)")
+    for o in range(3):
+        row=input().split()
+        #for p in range(3):
+            #row.append(input())
+        goal.append(row)
+    puzzle()
+    if(limit>12):
+        print("It's IMPOSSIBLE reaching the GOAL with the provided START state!")
+    else:
+        print("GOAL reached!!")
+            
+    
+main()
