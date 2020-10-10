@@ -2,8 +2,12 @@ from copy import copy, deepcopy
 matrix = []
 goal = []
 limit=1
+premat = [['2', '2', '2'], ['_', '4', '3'], ['7', '6', '5']]
 
 def find_h(m):
+    global premat
+    if(premat == m):
+        return 10
     h=0
     for o in range(3):
         for p in range(3):
@@ -23,8 +27,10 @@ def print_matrix():
     limit+=1
     
 def puzzle():
+                le=1000
                 q=0
                 global matrix
+                global premat
                 for i in range(0,3):
                  for j in range(0,3):
                    if (matrix[i][j] == "_"):
@@ -41,13 +47,14 @@ def puzzle():
                     mat2=deepcopy(matrix)
                     mat2[0][0],mat2[1][0]=mat2[1][0],mat2[0][0]
                     h2=find_h(mat2)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         matrix=deepcopy(mat1)
                         h=h1
                     else:
                         matrix=deepcopy(mat2)
                         h=h2
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -60,13 +67,14 @@ def puzzle():
                     mat2=deepcopy(matrix)
                     mat2[2][0],mat2[1][0]=mat2[1][0],mat2[2][0]
                     h2=find_h(mat2)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         matrix=deepcopy(mat1)
                         h=h1
                     else:
                         matrix=deepcopy(mat2)
                         h=h2
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -79,13 +87,14 @@ def puzzle():
                     mat2=deepcopy(matrix)
                     mat2[0][2],mat2[1][2]=mat2[1][2],mat2[0][2]
                     h2=find_h(mat2)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         matrix=deepcopy(mat1)
                         h=h1
                     else:
                         matrix=deepcopy(mat2)
                         h=h2
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -98,13 +107,14 @@ def puzzle():
                     mat2=deepcopy(matrix)
                     mat2[2][2],mat2[1][2]=mat2[1][2],mat2[2][2]
                     h2=find_h(mat2)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         matrix=deepcopy(mat1)
                         h=h1
                     else:
                         matrix=deepcopy(mat2)
                         h=h2
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -120,6 +130,7 @@ def puzzle():
                     mat3=deepcopy(matrix)
                     mat3[0][1],mat3[1][1]=mat3[1][1],mat3[0][1]
                     h3=find_h(mat3)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         h=h1
                         matrix=deepcopy(mat1)
@@ -129,7 +140,7 @@ def puzzle():
                     if(h3<h):
                         h=h3
                         matrix=deepcopy(mat3)
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -145,6 +156,7 @@ def puzzle():
                     mat3=deepcopy(matrix)
                     mat3[1][0],mat3[2][0]=mat3[2][0],mat3[1][0]
                     h3=find_h(mat3)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         h=h1
                         matrix=deepcopy(mat1)
@@ -154,7 +166,7 @@ def puzzle():
                     if(h3<h):
                         h=h3
                         matrix=deepcopy(mat3)
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -162,7 +174,7 @@ def puzzle():
                         puzzle()
                 if(x==1 and y==2):
                     mat1=deepcopy(matrix)
-                    mat1[1][2],mat1[0][1]=mat1[0][1],mat1[1][2]
+                    mat1[1][2],mat1[0][2]=mat1[0][2],mat1[1][2]
                     h1=find_h(mat1)
                     mat2=deepcopy(matrix)
                     mat2[1][2],mat2[1][1]=mat2[1][1],mat2[1][2]
@@ -170,6 +182,7 @@ def puzzle():
                     mat3=deepcopy(matrix)
                     mat3[1][2],mat3[2][2]=mat3[2][2],mat3[1][2]
                     h3=find_h(mat3)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         h=h1
                         matrix=deepcopy(mat1)
@@ -179,7 +192,7 @@ def puzzle():
                     if(h3<h):
                         h=h3
                         matrix=deepcopy(mat3)
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -195,6 +208,7 @@ def puzzle():
                     mat3=deepcopy(matrix)
                     mat3[2][1],mat3[1][1]=mat3[1][1],mat3[2][1]
                     h3=find_h(mat3)
+                    premat=deepcopy(matrix)
                     if(h1<h2):
                         h=h1
                         matrix=deepcopy(mat1)
@@ -204,7 +218,7 @@ def puzzle():
                     if(h3<h):
                         h=h3
                         matrix=deepcopy(mat3)
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -223,6 +237,8 @@ def puzzle():
                     mat4=deepcopy(matrix)
                     mat4[1][1],mat4[0][1]=mat4[0][1],mat4[1][1]
                     h4=find_h(mat4)
+                    premat=deepcopy(matrix)
+                    print(h1,h2,h3,h4)
                     if(h1<h2):
                         h=h1
                         matrix=deepcopy(mat1)
@@ -235,7 +251,7 @@ def puzzle():
                     if(h4<h):
                         h=h4
                         matrix=deepcopy(mat4)
-                    if(h==0 or limit>12):
+                    if(h==0 or limit>le):
                         print_matrix()
                         return
                     else:
@@ -245,13 +261,13 @@ def puzzle():
         
 
 def main():
-    print("Enter the elements of the 3*3 START matrix (one row in a LINE, SPACE between the elements. Also ensure that you enter '_' for the empty box)")
+    print("Enter the elements of the 3*3 START matrix (one row in a LINE, SPACE between the elements. Also ensure that you enter '_' for the empty Shell)")
     for o in range(3):
         row=input().split()
         #for p in range(3):
             #row.append(input())
         matrix.append(row)
-    print("Enter the elements of the 3*3 GOAL matrix (one row in a LINE, SPACE between the elements. Also ensure that you enter '_' for the empty box)")
+    print("Enter the elements of the 3*3 GOAL matrix (one row in a LINE, SPACE between the elements. Also ensure that you enter '_' for the empty Shell)")
     for o in range(3):
         row=input().split()
         #for p in range(3):
